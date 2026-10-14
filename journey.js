@@ -39,15 +39,15 @@ const auditEnabled=new URLSearchParams(location.search).has('perf');let auditLas
 function auditFrame(now){if(!auditEnabled)return;
  if(moon?.loaded&&!moon.canvas.dataset.resourceStats){const resources=performance.getEntriesByType('resource');moon.canvas.dataset.resourceStats=JSON.stringify({count:resources.length,transferBytes:resources.reduce((n,r)=>n+r.transferSize,0),encodedBytes:resources.reduce((n,r)=>n+r.encodedBodySize,0),firstPaint:performance.getEntriesByName('first-contentful-paint')[0]?.startTime,largest:resources.filter(r=>r.name.includes('/assets/')).sort((a,b)=>b.encodedBodySize-a.encodedBodySize).slice(0,5).map(r=>({path:new URL(r.name).pathname,bytes:r.encodedBodySize,ms:Math.round(r.duration)}))});}
 if(auditLast&&now-auditLast<1000)auditFrames.push(now-auditLast);auditLast=now;if(auditFrames.length>240)auditFrames.shift();if(now-auditReport<1000||!moon)return;auditReport=now;const a=[...auditFrames].sort((a,b)=>a-b),n=a.length;if(!n)return;Object.assign(moon.canvas.dataset,{frameMean:(a.reduce((s,x)=>s+x,0)/n).toFixed(2),frameP95:a[Math.min(n-1,Math.floor(n*.95))].toFixed(2),slowFrames:(a.filter(x=>x>34).length/n*100).toFixed(1),frameSamples:String(n),pageVisibility:document.visibilityState,pageFocused:String(document.hasFocus()),viewport:innerWidth+'x'+innerHeight});}
-function render(now){auditFrame(now);raf=0;if(!mode||document.hidden)return;const elapsed=now-(last||now),dt=clamp(elapsed,0,50);last=now;const paused=root.classList.contains('motion-off');target=phaseFor(clamp((scrollY-top)/vh,0,scrollFor(end)));const moving=Math.abs(target-t)>.0005;
- // Input follows the camera immediately; no network or decode barrier.
+function render(now){auditFrame(now);raf=0;if(!mode||document.hidden)return;const elapsed=now-(last||now),dt=clamp(elapsed,0,50);last=now;const paused=root.classList.contains('motion-off');target=phaseFor(clamp((scrollY-top)/vh,0,scrollFor(end)));const waitingForDetail=moon?.loaded&&!moon.detailReady&&target>.36;if(waitingForDetail)target=.36;const moving=Math.abs(target-t)>.0005;
+ // Keep the opening intact until close-up maps are ready; normal travel is unchanged.
  if(paused){arrival=0;t=target;}else if(arrival&&target<.01){arrival+=dt;t=anchors[0]*smooth(1,1000,arrival);if(arrival>=1000){scrollTo({top:top+scrollFor(anchors[0])*vh,behavior:'instant'});arrival=0;}}else{arrival=0;t+= (target-t)*(1-Math.exp(-dt/42));if(Math.abs(target-t)<.0005)t=target;}
  // Stay at the physical end of the page; never wrap scroll position or reset the scene.
  if(!paused){clock+=clamp(elapsed,0,250)/1000;idleClock+=dt/1000;if(worldAnimating&&gpu.packs.has(prefix()+'/world-'+world)){worldElapsed+=dt;if(worldElapsed>=1100){worldAnimating=false;oldFrame=null;gpu.retained=new Set(['world-'+world]);gpu.trim();}}}
  if(Math.abs(t-lastUI)>.0001||paused!==render.wasPaused){ui(t);lastUI=t;render.wasPaused=paused;}
  if(moon?.loaded){
  if(!root.classList.contains('moon-active'))root.classList.add('moon-active');moon.canvas.style.display='block';moon.render(t,clock);
- canvas.dataset.position=t.toFixed(4);canvas.dataset.clip='moon-flight';canvas.dataset.paused=String(paused);canvas.dataset.buffering='false';canvas.dataset.motion='scroll-driven-moon-flight';
+ canvas.dataset.position=t.toFixed(4);canvas.dataset.clip='moon-flight';canvas.dataset.paused=String(paused);canvas.dataset.buffering=String(waitingForDetail);canvas.dataset.motion='scroll-driven-moon-flight';
  render.count=(render.count||0)+1;render.duration=(render.duration||0)+elapsed;if(render.duration>1000){moon.canvas.dataset.fps=(render.count*1000/render.duration).toFixed(1);render.count=0;render.duration=0;}
  if(!paused||moving||arrival)request();return;
  }
@@ -75,7 +75,7 @@ function request(){if(!raf&&mode&&!document.hidden){if(performance.now()-last>10
 function resize(){const old=vh,at=(scrollY-top)/old;vh=innerHeight;top=track.getBoundingClientRect().top+scrollY;const d=Math.min(devicePixelRatio,mobile.matches?1.5:1.25,1440/innerWidth,1920/innerHeight);if(gpu)gpu.resize(Math.round(innerWidth*d*rasterScale),Math.round(innerHeight*d*rasterScale));if(mode&&old!==vh)scrollTo({top:top+clamp(at,0,scrollFor(end))*vh,behavior:'instant'});request();}
 function clear(){lastHigh=null;generation++;for(const controller of controllers)controller.abort();pending.clear();for(const v of cache.values())v.close();cache.clear();gpu?.clear();render.frozen=null;}
 async function setMode(on){const footer=document.querySelector('.footer');if(on)view.append(footer);else{document.querySelector('main').after(footer);footer.inert=false;}const token=++modeToken,was=mode;if(!on){backgroundFilms.pause();if(moon)moon.canvas.style.display='none';root.classList.remove('moon-active');mode=false;navigation++;root.classList.remove('journey-pending','journey-ready');root.classList.add('static-world');cancelAnimationFrame(raf);raf=0;sections.forEach(e=>{e.inert=false;e.style.removeProperty('visibility');});clear();if(active>=0)sections[active].scrollIntoView({block:'start'});window.dispatchEvent(new Event('resize'));document.dispatchEvent(new CustomEvent('avc:static-world'));return;}
- try{moon ||= new AVCMoonFlight(view);await moon.ready;if(!moon.loaded)throw Error('Lunar renderer unavailable');
+ try{moon ||= new AVCMoonFlight(view);await moon.ready;if(t>.36)await moon.fullReady;if(moon.detailError)throw moon.detailError;if(!moon.loaded)throw Error('Lunar renderer unavailable');
   // Present the current world as soon as its assets are ready. The retired
   // film decoder and its first frame must not delay or cover the first paint.
   if(moon?.loaded){
@@ -101,7 +101,7 @@ document.addEventListener('avc:connect',()=>{if(!mode)return;holdDone=performanc
 document.addEventListener('avc:world',e=>{if(!mode||!gpu||moon?.loaded){world=e.detail.name;canvas.dataset.world=world;request();return;}if(e.detail.name===world)return;oldWorld=world;oldFrame=gpu?.last;world=e.detail.name;gpu.retained=new Set(['world-'+world,'world-'+oldWorld]);worldElapsed=0;worldAnimating=!root.classList.contains('motion-off');render.frozen=null;restKey='';gpu?.pack('world-'+world).then(()=>request()).catch(()=>canvas.dataset.atlasError='true');request();});
 document.querySelectorAll('[data-world]').forEach(b=>{const hint=()=>{if(mode&&!moon?.loaded&&!worldAnimating)gpu.pack('world-'+b.dataset.world).catch(()=>{});};b.addEventListener('pointerenter',hint);b.addEventListener('focus',hint);});
 document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href').slice(1);if(mode&&ids.includes(id)){e.preventDefault();go(id);}}));
-document.addEventListener('avc:background-ready',request);
+document.addEventListener('avc:background-ready',request);document.addEventListener('avc:detail-ready',request);
 document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(raf);raf=0;navigation++;}else{last=0;request();}});reduced.addEventListener('change',()=>setMode(!reduced.matches));mobile.addEventListener('change',()=>{clear();setMode(!reduced.matches);});document.addEventListener('avc:gpu-lost',()=>setMode(false));
 if(reduced.matches)setMode(false);else setMode(true);
 })();
