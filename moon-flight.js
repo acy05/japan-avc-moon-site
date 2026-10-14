@@ -116,12 +116,23 @@ vec3 shade(vec3 n,vec2 uv){vec2 local=(uv-vec2(.36,.18))/vec2(.22,.29);float ins
    this.cloudShells.push({center,right:east,up:radial,forward:north,side,east,spacing,seed:cloudIndex++*1.79,range:65,scale:[size,9.5,10]});
   }
   this.quad=g.createBuffer();g.bindBuffer(g.ARRAY_BUFFER,this.quad);g.bufferData(g.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),g.STATIC_DRAW);
-  this.ready=this.load().then(()=>{this.loaded=true});
+  this.ready=this.load().then(()=>{this.loaded=true;this.canvas.dataset.readyMs=performance.now().toFixed(1)});
   this.canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();this.loaded=false;document.dispatchEvent(new Event('avc:gpu-lost'))});
  }
- async load(){const g=this.gl,base='assets/moon-v21/';this.meta=await fetch(base+'mesh.json').then(r=>{if(!r.ok)throw Error('Lunar mesh unavailable');return r.json()});
-  const volume=fetch('assets/cloud-v34/density-light.rgba').then(r=>{if(!r.ok)throw Error('Cloud volume unavailable');return r.arrayBuffer()}).then(bytes=>{if(bytes.byteLength!==3104*2328*4)throw Error('Invalid cloud volume');this.volumeTex=g.createTexture();g.bindTexture(g.TEXTURE_2D,this.volumeTex);g.pixelStorei(g.UNPACK_FLIP_Y_WEBGL,false);g.texImage2D(g.TEXTURE_2D,0,g.RGBA,3104,2328,0,g.RGBA,g.UNSIGNED_BYTE,new Uint8Array(bytes));g.texParameteri(g.TEXTURE_2D,g.TEXTURE_WRAP_S,g.CLAMP_TO_EDGE);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_WRAP_T,g.CLAMP_TO_EDGE);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_MIN_FILTER,g.LINEAR);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_MAG_FILTER,g.LINEAR);});
-  const hd=Promise.all([['groundColor','ground-color.jpg'],['groundNormal','ground-normal.png']].map(([key,file])=>new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>{this[key]=g.createTexture();g.bindTexture(g.TEXTURE_2D,this[key]);g.pixelStorei(g.UNPACK_FLIP_Y_WEBGL,true);g.texImage2D(g.TEXTURE_2D,0,g.RGB,g.RGB,g.UNSIGNED_BYTE,im);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_WRAP_S,g.CLAMP_TO_EDGE);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_WRAP_T,g.CLAMP_TO_EDGE);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_MIN_FILTER,g.LINEAR_MIPMAP_LINEAR);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_MAG_FILTER,g.LINEAR);g.generateMipmap(g.TEXTURE_2D);const ext=g.getExtension('EXT_texture_filter_anisotropic');if(ext)g.texParameterf(g.TEXTURE_2D,ext.TEXTURE_MAX_ANISOTROPY_EXT,Math.min(16,g.getParameter(ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT)));resolve();};im.onerror=reject;im.src='assets/moon-v24/'+file;})));
+ async load(){const g=this.gl,base='assets/moon-v21/';
+  // Begin independent assets together; geometry waits only for its own manifest.
+  const metadata=fetch(base+'mesh.json').then(r=>{if(!r.ok)throw Error('Lunar mesh unavailable');return r.json()});
+  const readBinary=async url=>{
+   const compressed=typeof DecompressionStream==='function';
+   const r=await fetch(url+(compressed?'.gz':''));if(!r.ok)throw Error('Lunar asset unavailable: '+url);
+   if(!compressed)return r.arrayBuffer();
+   // A host may already decode Content-Encoding; inspect the gzip signature.
+   const data=await r.arrayBuffer(),signature=new Uint8Array(data,0,Math.min(2,data.byteLength));
+   if(signature[0]!==31||signature[1]!==139)return data;
+   return new Response(new Blob([data]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
+  };
+  const volume=readBinary('assets/cloud-v34/density-light.rgba').then(bytes=>{if(bytes.byteLength!==3104*2328*4)throw Error('Invalid cloud volume');this.volumeTex=g.createTexture();g.bindTexture(g.TEXTURE_2D,this.volumeTex);g.pixelStorei(g.UNPACK_FLIP_Y_WEBGL,false);g.texImage2D(g.TEXTURE_2D,0,g.RGBA,3104,2328,0,g.RGBA,g.UNSIGNED_BYTE,new Uint8Array(bytes));g.texParameteri(g.TEXTURE_2D,g.TEXTURE_WRAP_S,g.CLAMP_TO_EDGE);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_WRAP_T,g.CLAMP_TO_EDGE);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_MIN_FILTER,g.LINEAR);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_MAG_FILTER,g.LINEAR);});
+  const hd=Promise.all([['groundColor','ground-color.jpg'],['groundNormal','ground-normal.webp']].map(([key,file])=>new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>{this[key]=g.createTexture();g.bindTexture(g.TEXTURE_2D,this[key]);g.pixelStorei(g.UNPACK_FLIP_Y_WEBGL,true);g.texImage2D(g.TEXTURE_2D,0,g.RGB,g.RGB,g.UNSIGNED_BYTE,im);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_WRAP_S,g.CLAMP_TO_EDGE);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_WRAP_T,g.CLAMP_TO_EDGE);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_MIN_FILTER,g.LINEAR_MIPMAP_LINEAR);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_MAG_FILTER,g.LINEAR);g.generateMipmap(g.TEXTURE_2D);const ext=g.getExtension('EXT_texture_filter_anisotropic');if(ext)g.texParameterf(g.TEXTURE_2D,ext.TEXTURE_MAX_ANISOTROPY_EXT,Math.min(16,g.getParameter(ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT)));resolve();};im.onerror=reject;im.src='assets/moon-v24/'+file;})));
   const clouds=new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>{this.cloudTex=g.createTexture();g.bindTexture(g.TEXTURE_2D,this.cloudTex);g.pixelStorei(g.UNPACK_FLIP_Y_WEBGL,true);g.texImage2D(g.TEXTURE_2D,0,g.RGBA,g.RGBA,g.UNSIGNED_BYTE,im);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_WRAP_S,g.CLAMP_TO_EDGE);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_WRAP_T,g.CLAMP_TO_EDGE);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_MIN_FILTER,g.LINEAR);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_MAG_FILTER,g.LINEAR);resolve()};im.onerror=reject;im.src='assets/cloud-foreground-v12.png'});
   const detail=new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>{this.detail=g.createTexture();g.bindTexture(g.TEXTURE_2D,this.detail);g.pixelStorei(g.UNPACK_FLIP_Y_WEBGL,true);g.texImage2D(g.TEXTURE_2D,0,g.RGB,g.RGB,g.UNSIGNED_BYTE,im);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_WRAP_S,g.CLAMP_TO_EDGE);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_WRAP_T,g.CLAMP_TO_EDGE);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_MIN_FILTER,g.LINEAR_MIPMAP_LINEAR);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_MAG_FILTER,g.LINEAR);g.generateMipmap(g.TEXTURE_2D);resolve()};im.onerror=reject;im.src=base+'landing-detail.jpg'});
   const texture=new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>{this.tex=g.createTexture();g.bindTexture(g.TEXTURE_2D,this.tex);g.pixelStorei(g.UNPACK_FLIP_Y_WEBGL,true);g.texImage2D(g.TEXTURE_2D,0,g.RGB,g.RGB,g.UNSIGNED_BYTE,im);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_WRAP_S,g.REPEAT);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_WRAP_T,g.CLAMP_TO_EDGE);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_MAG_FILTER,g.LINEAR);g.texParameteri(g.TEXTURE_2D,g.TEXTURE_MIN_FILTER,g.LINEAR_MIPMAP_LINEAR);g.generateMipmap(g.TEXTURE_2D);const ext=g.getExtension('EXT_texture_filter_anisotropic');if(ext)g.texParameterf(g.TEXTURE_2D,ext.TEXTURE_MAX_ANISOTROPY_EXT,Math.min(8,g.getParameter(ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT)));resolve()};im.onerror=reject;im.src=base+'albedo.jpg'});
@@ -129,9 +140,10 @@ vec3 shade(vec3 n,vec2 uv){vec2 local=(uv-vec2(.36,.18))/vec2(.22,.29);float ins
   // Reject incomplete geometry instead of uploading a 404 body to WebGL.
   const geometry=(async()=>{
    const read=async file=>{const r=await fetch(base+file);if(!r.ok)throw Error('Lunar geometry unavailable: '+file);return r.arrayBuffer();};
+   this.meta=await metadata;
+   const chunks=await Promise.all(this.meta.chunks.map(async c=>({c,buffers:await Promise.all([read(c.vertices),read(c.indices)])})));
    this.parts=[];
-   for(const c of this.meta.chunks){
-    const [v,i]=await Promise.all([read(c.vertices),read(c.indices)]);
+   for(const {c,buffers:[v,i]} of chunks){
     if(!v.byteLength||v.byteLength%32||i.byteLength!==c.count*2)throw Error('Invalid lunar geometry: '+c.vertices);
     const vertexCount=v.byteLength/32;
     if(new Uint16Array(i).some(index=>index>=vertexCount))throw Error('Invalid lunar index: '+c.indices);
