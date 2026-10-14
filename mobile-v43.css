@@ -51,7 +51,7 @@ html.journey-ready,html.journey-ready body{overscroll-behavior-y:none}
 @media(max-width:360px){.sequence-ready .e-route strong{font-size:18px;white-space:nowrap}}
 
 /* V47: the footer belongs to the settled final view, with separate link rows. */
-.journey-returning .e-hero .e-route{bottom:calc(var(--ending-footer-height,214px) + 18px)}
+.journey-ready.journey-returning .e-hero .e-route{bottom:calc(var(--ending-footer-height,214px) + 18px)}
 @media(max-width:800px){
  .journey-ready .footer{height:214px;min-height:0;padding:12px 26px 46px;grid-template-columns:1fr auto;grid-template-rows:36px 88px 20px;gap:6px 12px}
  .journey-ready .footer .brand{grid-area:1/1}.journey-ready .footer .brand-symbol{width:28px}
@@ -60,7 +60,7 @@ html.journey-ready,html.journey-ready body{overscroll-behavior-y:none}
  .journey-ready .footer .footer-links{grid-row:2;gap:0 10px;font-size:9px}
  .journey-ready .footer .footer-links a{min-height:44px}
  .journey-ready .footer .prototype-note{grid-row:3;font-size:7px;gap:2px}
- .journey-returning .e-hero-copy{visibility:hidden}
+ .journey-ready.journey-returning .e-hero-copy{visibility:hidden}
  .moon-active.journey-returning .e-guide-hero{left:auto;right:14%;top:auto;bottom:calc(var(--ending-footer-height,214px) + var(--ending-route-height,120px) + 36px);width:75px}
  .moon-active.journey-returning .e-guide-hero .guide-line{bottom:25%;right:90%;max-width:180px;font-size:10px;padding:8px 11px}
 }
