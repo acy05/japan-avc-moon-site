@@ -1,0 +1,41 @@
+/* World treatment belongs to the site; the guide remains one approved 2D image. */
+.hero .world-image{background-image:url('assets/chapter-reference.webp');inset:-6%;background-position:62% center}
+.hero{min-height:780px}.hero-content{top:23%;max-width:54%}.hero h1{font-size:clamp(38px,4.4vw,68px)}
+.hero .world-shade{background:linear-gradient(90deg,#03101dd9,transparent 76%),linear-gradient(0deg,#071323,transparent 42%)}
+.hero-world:after{content:"";position:absolute;inset:58% -20% -10%;background:radial-gradient(ellipse at 50% 20%,#b8e9ff24,transparent 63%);mix-blend-mode:screen;animation:water-breathe 8s ease-in-out infinite alternate;pointer-events:none}
+.mist-one{top:39%;left:10%;width:110%;height:38%;background:radial-gradient(ellipse,#d7eeff26,transparent 67%);animation:cloud-drift 18s ease-in-out infinite alternate}
+.hero-paths{gap:32px;width:min(650px,58%)}.path{transition:transform .5s,color .4s}.path:hover{color:#c5ecff;transform:translateY(-5px)}.path-name>span{transition:transform .4s}.path:hover .path-name>span{transform:translateX(7px)}
+.chapter:after{content:"";position:absolute;inset:auto 0 0;height:110px;background:linear-gradient(0deg,#071323aa,transparent);pointer-events:none;z-index:-1}
+.chapter-number{color:#a2c8df}.chapter-world{z-index:-2;inset:-8% 0;pointer-events:none}
+.about{background:#071323}.about-view{opacity:.9;background-position:66% center}.scene-path{border-color:#ccefff;box-shadow:0 -5px 25px #b7eaff0a}.about-visual{inset:8% -2% 3% 47%}
+.products{background:#0b1e2e;color:#eff7fd}.products:before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(ellipse at 67% 33%,#38729545,transparent 62%)}
+.products .chapter-number,.products .section-label{color:#a4c9df}.products .chapter-description{color:#c6d9e6}.products .pill-link{color:#e6f5ff;border-color:#8aafc46b}
+.product-paths{border-color:#b8dfff26}.product-path{border-color:#b8dfff30;transition:background .4s,padding .4s}.product-path svg{stroke:#b1d7ed}.product-path strong{color:#f2f8ff}.product-path small{color:#adc6d8}.path-arrow{color:#bedfff;transition:transform .4s}.product-path:hover{background:#b8dfff08;border-color:#b8dfff7a;padding-left:10px}.product-path:hover .path-arrow{transform:translate(3px,-3px)}
+.product-art{height:390px}.product-art img{filter:drop-shadow(0 0 28px #88c8ee22);mix-blend-mode:screen}.product-orbit{border-color:#a1d2ef57}.product-orbit:after{background:#cceeff;box-shadow:0 0 10px #bceaff}
+.technology{background:#071725}.technology .chapter-world{background:linear-gradient(90deg,#071725fa 8%,#071725ce 58%,#07172588),url('assets/chapter-reference.webp') 70% 35%/cover!important;opacity:.65}
+.diagram-ring{box-shadow:0 0 25px #a3d5f512}.ring-c{box-shadow:0 0 30px #a3d5f52e}.diagram-label{background:#071725e8}.tech-tabs{position:relative}.tech-tab{transition:background .4s,transform .4s}.tech-tab:hover,.tech-tab[aria-selected=true]{background:#b7dfff0e;transform:translateY(-3px)}
+.cases{background:#0a1a28}.cases .chapter-world{background:radial-gradient(ellipse at 75% 10%,#2a567f30,transparent 70%)!important}.case-card{transition:transform .5s}.case-card:hover{transform:translateY(-5px)}.case-card .case-image{overflow:hidden}.case-card .case-image img{transition:transform .7s}.case-card:hover .case-image img{transform:scale(1.025)}
+.final-world{inset:-8% 0;background:linear-gradient(90deg,#071323eb,#07132355),url('assets/chapter-reference.webp') 65% center/cover!important;opacity:.9}
+.pill-link{transition:background .4s,transform .4s}.pill-link:hover{background:#cdeaff12;transform:translateX(3px)}
+.guide{display:block;width:180px;transition:width .5s ease;filter:drop-shadow(0 0 11px #bde4ff44);pointer-events:none}.guide-figure{width:100%;height:auto}.guide-float{transform-origin:center}
+.guide-anchor-hero{left:70%;top:37%;width:185px;height:185px}.guide-anchor-about{left:71%;top:51%;width:145px;height:145px}.guide-anchor-products{left:83%;top:20%;width:110px;height:110px}.guide-anchor-technology{right:6%;top:18%;width:120px;height:120px}.guide-anchor-cases{right:8%;bottom:12%;width:95px;height:95px}.guide-anchor-contact{left:73%;top:44%;width:160px;height:160px}
+.guide-bubble,.guide.docked .guide-bubble{display:block;left:82%;top:78%;font-family:"Yu Mincho",serif;font-size:12px;line-height:1.9;max-width:135px;white-space:normal;background:#071323a6;border-color:#b8dfff26;letter-spacing:.06em;width:max-content;padding:7px 12px}.guide-bubble:empty{display:none}.guide.resting .guide-figure{opacity:1}
+.motion-off .guide{display:block}.motion-off .guide-stand,.guide-stand,.anchor-phrase{display:none!important}.motion-off .guide-bubble{visibility:visible}.motion-off .guide-float,.motion-off .guide-figure{transform:none!important}
+/* Match the docked selector so empty chapter dialogue never leaves a visible box. */
+.guide-bubble:empty,.guide.docked .guide-bubble:empty{display:none}
+@keyframes cloud-drift{to{translate:4% -4%;opacity:.65}}@keyframes water-breathe{to{opacity:.55;scale:1.025}}
+@media(min-width:1600px){.hero-paths{bottom:80px}.hero-content{top:26%}.guide-anchor-hero{top:39%;width:210px;height:210px}}
+@media(max-width:1100px){.hero-content{max-width:65%}.hero h1{font-size:45px}.hero-paths{width:65%}.guide-anchor-hero{left:75%;top:44%;width:160px;height:160px}}
+@media(max-width:800px){
+ .hero{min-height:820px}.hero-content{top:136px;left:28px;max-width:calc(100% - 48px)}.hero h1{font-size:clamp(28px,6.6vw,42px);letter-spacing:.065em}.hero .world-image{inset:0 -62% 0 -28%;background-position:60% center}.hero .world-shade{background:linear-gradient(180deg,#031020aa,transparent 75%),linear-gradient(0deg,#071323,transparent 42%)}
+ .hero-paths{width:auto;left:28px;right:28px;gap:22px;bottom:48px}.path-name{font-size:21px}.path-description{font-size:10px}.guide-anchor-hero{left:62%;top:57%;width:130px;height:130px}
+ .guide-bubble,.guide.docked .guide-bubble{left:auto;right:90%;top:45%;font-size:11px;max-width:118px;line-height:1.8}.guide-anchor-about{left:35%;top:auto;bottom:155px;width:115px;height:115px}.guide-anchor-products{left:76%;top:480px;width:90px;height:90px}.guide-anchor-technology{right:4%;top:455px;width:90px;height:90px}.guide-anchor-cases{right:4%;bottom:10px;width:80px;height:80px}.guide-anchor-contact{left:67%;top:64%;width:125px;height:125px}
+ .products .guide-bubble,.technology .guide-bubble,.cases .guide-bubble{display:none}.product-art{height:310px}.about-visual{inset:auto -15% 25px 9%;height:355px}.final-content{max-width:100%}
+ .product-path:hover{padding-left:0}.hero-world:after{animation:none}.chapter:after{height:60px}
+}
+@media(prefers-reduced-motion:reduce){.guide{display:block}.guide-float,.guide-figure{transform:none!important}.about-view,.chapter-world{transform:none!important}.hero-world:after,.mist-one{animation:none}.guide-bubble{transition:none}}
+
+.page-hidden .hero-world:after,.page-hidden .mist-one{animation-play-state:paused}
+@media(max-width:800px){.hero-paths{bottom:96px}.path small{white-space:normal}.path-name{gap:10px;letter-spacing:.1em}.scroll-hint{top:66%}}
+@media(max-width:360px){.path-name{font-size:18px}.path-name>span{font-size:17px}.path small{font-size:9px}.path-description{font-size:9px}.hero-paths{gap:18px}}
+@media(max-width:800px){.scroll-hint{display:none}}

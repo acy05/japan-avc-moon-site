@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="660" viewBox="100 50 430 560" fill="none">
+ <defs><pattern id="h" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V9" stroke="#70a6bc" stroke-width=".7" opacity=".4"/></pattern><linearGradient id="g"><stop stop-color="#e0f4ff"/><stop offset="1" stop-color="#91d1e8"/></linearGradient></defs>
+ <g stroke="url(#g)" stroke-width="1.6" stroke-linejoin="round">
+  <path d="M198 138Q198 106 232 102H368Q402 106 402 138V236L424 252V298L403 312V408L423 422V456L375 469V572H225V469L177 456V422L197 408V312L176 298V252L198 236Z"/>
+  <path d="M229 125H371V238L351 257V292L371 309V409H346V467H331V585H269V467H254V409H229V309L249 292V257L229 238Z" fill="url(#h)"/>
+  <path d="M270 92V104M330 92V104M198 154H229M371 154H402M198 225H229M371 225H402M176 260H249M351 260H424M176 286H249M351 286H424M197 327H229M371 327H403M197 339H229M371 339H403M197 351H229M371 351H403M197 363H229M371 363H403M197 375H229M371 375H403M197 387H229M371 387H403M177 433H254M346 433H423M177 449H254M346 449H423M225 469H269M331 469H375"/>
+  <path d="M278 125V580M322 125V580" stroke-width=".8" opacity=".5"/>
+ </g>
+ <g stroke="#83b5cc" stroke-width=".8" opacity=".7">
+  <path d="M300 65V620" stroke-dasharray="10 6 2 6"/><path d="M148 252H96M148 298H96M108 252V298M104 257L112 252M104 298L112 293M197 84V58M403 84V58M197 69H403M202 65L197 73M403 65L398 73M448 102H506M448 469H506M491 102V469M487 108L495 102M487 469L495 463"/>
+  <path d="M398 174H455L480 148M399 352H457L478 330M375 450H446L465 486"/>
+ </g>
+ <g fill="#b3d7e7" font-family="sans-serif" font-size="12" letter-spacing="2">
+  <text x="292" y="56">A</text><text x="506" y="290">B</text><text x="75" y="280">C</text><text x="480" y="143">SEAL</text><text x="478" y="324">THREAD</text><text x="462" y="505">LOCK</text>
+ </g>
+ <circle cx="300" cy="112" r="3" fill="#e5f7ff"/><circle cx="403" cy="352" r="3" fill="#e5f7ff"/>
+</svg>

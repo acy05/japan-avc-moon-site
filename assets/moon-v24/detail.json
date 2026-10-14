@@ -1,0 +1,28 @@
+{
+  "bounds_uv": [
+    0.39,
+    0.24,
+    0.55,
+    0.64
+  ],
+  "texture_size": [
+    4096,
+    4096
+  ],
+  "color_source_size": [
+    27360,
+    13680
+  ],
+  "height_source_size": [
+    23040,
+    11520
+  ],
+  "normal_space": "world",
+  "relief_exaggeration": 2,
+  "source": "NASA SVS CGI Moon Kit / LROC color + LOLA 64 pixels per degree",
+  "source_url": "https://svs.gsfc.nasa.gov/4720/",
+  "assets": {
+    "ground-color.jpg": 4892387,
+    "ground-normal.png": 22725172
+  }
+}

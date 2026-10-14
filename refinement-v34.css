@@ -1,0 +1,27 @@
+/* Full viewport menu shares the moon world's blue and pale gold. */
+.menu-toggle{display:block;width:44px;height:44px}
+#mobile-menu{position:fixed;inset:0;width:100%;height:100dvh;max-width:none;max-height:none;margin:0;border:0;padding:clamp(85px,12vh,140px) clamp(26px,9vw,150px) 38px;color:#eef3fa;background:radial-gradient(ellipse at 84% 0%,#24456688,transparent 60%),linear-gradient(135deg,#06101e,#0b2038);overflow:auto;overscroll-behavior:contain}
+#mobile-menu:not([open]){display:none}
+#mobile-menu[open]{display:grid;grid-template-columns:1fr 1.35fr;column-gap:10vw;align-content:center}
+#mobile-menu::backdrop{background:#041020e8}
+.menu-close{position:absolute;top:22px;right:clamp(22px,5vw,80px);width:48px;height:48px;background:transparent;color:inherit;border:1px solid #dbeaff55;border-radius:50%}
+.menu-close span{position:absolute;top:23px;left:13px;width:20px;height:1px;background:currentColor;rotate:45deg}.menu-close span+span{rotate:-45deg}
+.menu-heading small{font:10px/2 Arial,sans-serif;letter-spacing:.25em;color:#bdc9d8}.menu-heading p{font:clamp(20px,2.5vw,36px)/1.7 'Yu Mincho',serif;letter-spacing:.1em;margin-top:26px}
+#mobile-menu nav a{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding:19px 0;border-bottom:1px solid #b8d4ef30;font:clamp(20px,2.7vw,38px)/1.3 Arial,sans-serif;letter-spacing:.03em;opacity:0;transform:translateY(16px);transition:opacity .5s,transform .65s cubic-bezier(.16,1,.3,1),color .2s}
+#mobile-menu nav a span{font:11px/1.6 'Yu Gothic',sans-serif;color:#c3d3e4;letter-spacing:.07em}
+#mobile-menu.is-open nav a{opacity:1;transform:none;transition-delay:calc(var(--i)*45ms)}
+#mobile-menu nav a:nth-child(1){--i:1}#mobile-menu nav a:nth-child(2){--i:2}#mobile-menu nav a:nth-child(3){--i:3}#mobile-menu nav a:nth-child(4){--i:4}#mobile-menu nav a:nth-child(5){--i:5}#mobile-menu nav a:nth-child(6){--i:6}
+#mobile-menu nav a:hover{color:#e8cda3}.menu-footnote{grid-column:1/-1;font:9px/1.5 Arial,sans-serif;letter-spacing:.25em;color:#9fb6cc;margin-top:40px}
+#mobile-menu :focus-visible{outline:2px solid #e8cda3;outline-offset:6px}
+.menu-open{overflow:hidden}
+/* Small scene-specific words follow the original guide, without a pointer. */
+.e-guide .guide-line{position:absolute;right:65%;bottom:88%;width:max-content;max-width:220px;margin:0;padding:11px 15px;border:1px solid #deedff6b;border-radius:14px 14px 3px 14px;background:#081b33b8;color:#edf5ff;font:12px/1.8 'Yu Mincho',serif;letter-spacing:.045em;text-align:left;box-shadow:0 5px 24px #020a2033;pointer-events:none;text-shadow:0 1px 5px #00122e;transform:none;animation:guideWords .7s ease-out both}
+.e-guide-product .guide-line{right:50%;bottom:95%}.e-guide-final .guide-line{right:55%;bottom:95%}
+.e-search button{font-size:12px;min-width:62px}.back-top{font:10px/1 Arial,sans-serif}
+@keyframes guideWords{from{opacity:0;translate:0 6px}to{opacity:1;translate:0 0}}
+@media(max-width:800px){#mobile-menu[open]{display:block;padding:92px 28px 34px}.menu-heading p{font-size:22px;margin:9px 0 24px}.menu-heading small{font-size:8px}#mobile-menu nav a{font-size:22px;padding:17px 0}#mobile-menu nav a span{font-size:10px}.menu-footnote{margin-top:28px}.e-guide .guide-line{font-size:10px;max-width:180px;padding:8px 11px;right:35%;bottom:93%}.e-guide-product .guide-line{right:5%}.e-guide-case .guide-line{right:0}.e-guide-final .guide-line{right:10%;max-width:170px}}
+@media(max-height:650px){#mobile-menu{align-content:start}#mobile-menu nav a{padding:12px 0}.menu-heading p{margin-bottom:15px}.menu-footnote{margin-top:22px}}
+@media(prefers-reduced-motion:reduce){#mobile-menu nav a{transition:none;transform:none;opacity:1}.e-guide .guide-line{animation:none}}
+.motion-off #mobile-menu nav a{transition:none;transform:none;opacity:1}
+
+.e-guide .guide-end-line{display:none}.journey-returning .e-guide .guide-start-line{display:none}.journey-returning .e-guide .guide-end-line{display:block}

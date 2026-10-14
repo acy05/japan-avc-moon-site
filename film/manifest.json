@@ -1,0 +1,53 @@
+{
+  "version": 13,
+  "format": "webp",
+  "runtime": "canvas2d",
+  "character": "approved 2D guide baked in every frame",
+  "original_character_sha256": "4a9e756f0755c9c7e0cf8cd645b8f88217a34d589fae96c4a70de88795ad933b",
+  "width": {
+    "pc": 1920,
+    "sp": 1080
+  },
+  "height": {
+    "pc": 1080,
+    "sp": 1920
+  },
+  "clips": {
+    "main": 240,
+    "hold": 16,
+    "arrival": 32,
+    "case-machine": 24,
+    "exit-machine": 24,
+    "case-ev": 24,
+    "exit-ev": 24,
+    "case-energy": 24,
+    "exit-energy": 24,
+    "case-marine": 24,
+    "exit-marine": 24,
+    "case-space": 24,
+    "exit-space": 24,
+    "idle-0": 16,
+    "idle-1": 16,
+    "idle-2": 16,
+    "idle-3": 16,
+    "idle-4": 16,
+    "idle-5": 16,
+    "idle-world-machine": 16,
+    "idle-world-ev": 16,
+    "idle-world-energy": 16,
+    "idle-world-marine": 16,
+    "idle-world-space": 16,
+    "veil": 16
+  },
+  "scenes": [
+    "hero",
+    "about",
+    "products",
+    "technology",
+    "cases",
+    "contact"
+  ],
+  "total_per_variant": 720,
+  "art_direction": "approved artwork with geometric water, world-space volumetric cloud lighting and deeper offline camera",
+  "background_assets_unchanged": true
+}

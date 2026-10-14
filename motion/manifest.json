@@ -1,0 +1,77 @@
+{
+  "version": 14,
+  "variants": {
+    "pc": {
+      "w": 768,
+      "h": 432,
+      "cols": 5,
+      "rows": 6,
+      "packs": [
+        {
+          "name": "main-a",
+          "bytes": 1507748
+        },
+        {
+          "name": "main-b",
+          "bytes": 1388384
+        },
+        {
+          "name": "world-machine",
+          "bytes": 1060900
+        },
+        {
+          "name": "world-ev",
+          "bytes": 1065452
+        },
+        {
+          "name": "world-energy",
+          "bytes": 1171460
+        },
+        {
+          "name": "world-marine",
+          "bytes": 1017178
+        },
+        {
+          "name": "world-space",
+          "bytes": 1396196
+        }
+      ]
+    },
+    "sp": {
+      "w": 384,
+      "h": 680,
+      "cols": 5,
+      "rows": 6,
+      "packs": [
+        {
+          "name": "main-a",
+          "bytes": 1048312
+        },
+        {
+          "name": "main-b",
+          "bytes": 1006934
+        },
+        {
+          "name": "world-machine",
+          "bytes": 790390
+        },
+        {
+          "name": "world-ev",
+          "bytes": 837248
+        },
+        {
+          "name": "world-energy",
+          "bytes": 862590
+        },
+        {
+          "name": "world-marine",
+          "bytes": 879716
+        },
+        {
+          "name": "world-space",
+          "bytes": 1138434
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,53 @@
+/* Plan review: a calm practical surface within the continuous brand journey. */
+.world-page .products{background:#f1f5f8;color:#183044;padding-top:100px;padding-bottom:100px}
+.world-page .products:before{background:radial-gradient(ellipse at 70% 25%,#b8d6e74d,transparent 60%)}
+.world-page .products:after{height:70px;background:linear-gradient(0deg,#dce8ef,transparent)}
+.world-page .products .chapter-number,.world-page .products .section-label{color:#4d7087}
+.world-page .products .chapter-description{color:#415b6c}
+.world-page .products .pill-link{color:#183044;border-color:#7a9aaa}
+.world-page .products .pill-link:hover{background:#dce9f0}
+.world-page .products .product-art img{mix-blend-mode:normal;filter:drop-shadow(0 16px 24px #153a5024)}
+.world-page .products .product-orbit{border-color:#688ea44d}
+.world-page .products .product-orbit:after{background:#507c96;box-shadow:none}
+.product-quick-search{grid-column:1/-1;position:relative;z-index:1;background:#fff;border:1px solid #c7d9e5;border-radius:8px;padding:24px 28px;margin-top:12px}
+.product-quick-search label{display:block;font-size:15px;font-weight:500;margin-bottom:12px;letter-spacing:.03em}
+.product-quick-search>div{display:flex;border:1px solid #819db0;border-radius:4px;overflow:hidden}
+.product-quick-search input{flex:1;min-width:0;color:#183044;background:#fff;border:0;font:16px/1.5 var(--avc-font);padding:14px 16px;color-scheme:light}
+.product-quick-search button{display:flex;align-items:center;justify-content:center;gap:24px;min-height:48px;background:#14394d;color:#fff;font:14px/1.5 var(--avc-font);padding:12px 22px;white-space:nowrap}
+.product-quick-search button:hover{background:#20536b}
+.product-quick-search p{font-size:12px;color:#536f80;line-height:1.8;margin:12px 0 0}
+.world-page .products .product-paths{border-color:#b4cbd9;padding-top:20px}
+.world-page .products .product-path{border-color:#b4cbd9}
+.world-page .products .product-path svg{stroke:#345c77}
+.world-page .products .product-path strong{color:#14394d;font-size:14px}
+.world-page .products .product-path small{color:#536f80;font-size:12px}
+.world-page .products .path-arrow{color:#345c77}
+.world-page .products .product-path:hover{background:#dce9f066;border-color:#507c96}
+.chapter-light{position:absolute;inset:10% -10%;z-index:-1;pointer-events:none;opacity:.3;background:radial-gradient(ellipse at 78% 48%,#90c9ed20,transparent 57%)}
+.technology .chapter-light{background:radial-gradient(ellipse at 65% 50%,#a9ddf82a,transparent 50%)}
+.cases .chapter-light{background:radial-gradient(ellipse at 80% 30%,#79afdd26,transparent 56%)}
+.motion-off .chapter-light{transform:none!important;opacity:.3!important}
+@media(max-width:800px){
+ .world-page .products{padding:80px 28px}
+ .product-quick-search{padding:20px;margin:20px 0}
+ .product-quick-search label{font-size:14px}
+ .product-quick-search p{font-size:12px}
+ .product-quick-search>div{display:block}
+ .product-quick-search input,.product-quick-search button{width:100%;min-height:48px}
+ .product-quick-search button{border-top:1px solid #819db0}
+ .world-page .chapter-description,.world-page .about .chapter-description,.world-page .final-content p{font-size:14px;line-height:2}
+ .world-page .products .product-path strong{font-size:13px}
+ .world-page .products .product-path small{font-size:11px}
+ .world-page .product-path{min-height:112px}
+ .world-page .tech-panel p{font-size:13px}
+}
+@media(max-width:360px){
+ .world-page .products{padding-left:24px;padding-right:24px}
+ .product-quick-search{padding:16px}
+ .world-page .chapter-description,.world-page .about .chapter-description{font-size:13px}
+ .world-page .products .product-path strong{font-size:12px}
+ .world-page .products .product-path small{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){.chapter-light{transform:none!important;opacity:.3!important}}
+.guide.on-light .guide-bubble{background:#f4f8fbf2;color:#253f52;border-color:#7a9aaa66;text-shadow:none}
+@media(max-width:800px){.guide.on-light .guide-bubble{display:none}}

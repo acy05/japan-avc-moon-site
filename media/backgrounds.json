@@ -1,0 +1,17 @@
+{
+  "status": "pc-hero-controlled-water-prototype; other-scenes-pending",
+  "clips": {
+    "pc/hero": {
+      "src": "media/pc/hero-water-v19.mp4",
+      "foreground": "media/pc/hero-foreground.png",
+      "source": "Blender pre-rendered continuous water surface and reflected original artwork",
+      "visual_review": "continuous wave surface inspected; user acceptance pending",
+      "edit": "240 rendered frames; 60fps; native 4-second loop; no AI video or crossfade"
+    }
+  },
+  "original_guide_excluded_from_AI": true,
+  "native_resolution": [
+    1920,
+    1080
+  ]
+}

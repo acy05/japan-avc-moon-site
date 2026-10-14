@@ -1,0 +1,110 @@
+/* V22: original blue-and-gold atmosphere around a continuous 3D moon flight. */
+#moon-flight{display:none;position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+.moon-active #spatial-world{visibility:hidden}
+.journey-pending .e-journey-viewport{background:#071323}
+.moon-active .background-film{display:none!important}
+.moon-active .e-guide{display:block!important;z-index:4;pointer-events:none}
+.moon-active .e-guide img{display:block;width:100%;height:auto;filter:drop-shadow(0 14px 24px #0005)}
+.moon-active .e-guide-hero{position:absolute;left:70%;top:44%;width:clamp(90px,11vw,165px);transform:none!important;animation:moonGuideFloat 6s ease-in-out infinite}
+.moon-active .e-guide span{display:none}
+.moon-active .e-guide-about{position:absolute;left:75%;top:39%;width:125px}
+.moon-active .e-guide-final{position:absolute;left:72%;top:44%;width:150px}
+.motion-off .e-guide{animation-play-state:paused!important}
+.static-world .e-scene .e-world{--static-world:url('assets/chapter-reference.webp')!important;--sequence-poster:url('assets/chapter-reference.webp')!important;background-image:url('assets/chapter-reference.webp')!important}
+@keyframes moonGuideFloat{0%,100%{translate:0 0;rotate:-2deg}50%{translate:0 -12px;rotate:2deg}}
+@media(max-width:800px){.moon-active .e-guide-hero{left:64%;top:49%;width:104px}.moon-active .e-guide-about{display:none!important}.moon-active .e-guide-final{left:65%;top:62%;width:105px}}
+@media(prefers-reduced-motion:reduce){.e-guide{animation:none!important}#moon-flight{display:none!important}}
+.moon-active .e-product-object img,.moon-active .e-blueprint svg{display:block}
+.moon-active .e-product-object{top:20%;right:14%;width:27%;max-width:380px}
+.moon-active .e-guide-product{left:auto;right:8%;top:50%;width:100px}
+.moon-active[data-journey-scene=products] .site-header{color:#e2edf5;background:linear-gradient(#04121eaa,transparent)}
+.moon-active .e-product-object span{color:#d4e7f3}
+@media(max-width:800px){.moon-active .e-product-object{top:32%;right:30%;width:40%;max-width:190px}.moon-active .e-guide-product{right:14%;top:41%;width:75px}}
+/* Keep text readable over the physically lit surface. */
+.moon-active .e-journey-viewport:after{background:linear-gradient(90deg,#02091880,transparent 65%),linear-gradient(0deg,#02091855,transparent 28%)}
+
+/* V27: the applications and ending share the same blue lunar world. */
+.moon-active .e-case-world,.static-world .e-case-world{display:none!important}
+.moon-active .e-guide-case{position:absolute;right:9%;top:23%;width:100px}
+.moon-active .e-cases .e-case-story{left:auto;right:10%;top:37%;width:38%;max-width:480px;background:linear-gradient(120deg,#071b31c9,#071b3140);border:1px solid #a3cbe52c;border-radius:3px;padding:25px 30px}
+.moon-active .e-case-selector{background:linear-gradient(90deg,#071b31b5,#071b3177);border-top:1px solid #b9d7ed66}
+.moon-active .e-case-selector button[aria-pressed=true]{color:#fff;background:#9bd5ff15;box-shadow:inset 0 2px #cceaff}
+.journey-ready .footer{position:absolute;inset:auto 0 0;z-index:8;display:grid;grid-template-columns:1fr 2fr auto;align-items:center;gap:23px 38px;min-height:190px;padding:42px var(--gutter) 60px;background:linear-gradient(0deg,#061322ed,#061322b3 58%,transparent);border:0;opacity:var(--footer-alpha,0);visibility:visible;pointer-events:none;transform:translateY(calc((1 - var(--footer-alpha,0))*14px))}
+.journey-ready .footer:not([inert]) a{pointer-events:auto}
+.journey-ready .footer .footer-links{margin:0;justify-content:flex-end;flex-wrap:wrap;gap:14px 28px;font-size:11px}
+.journey-ready .footer .prototype-note{grid-column:1/3;display:flex;gap:18px;font-size:9px;letter-spacing:.07em;color:#afc6dc}
+.journey-ready .footer .back-top{grid-column:3;grid-row:1/3;width:44px;height:44px}
+.journey-ready .e-contact .e-final-copy{padding-top:25px;max-width:690px}
+.journey-ready .e-contact .e-final-copy h2{font-size:clamp(32px,3.8vw,56px);line-height:1.5}
+.journey-ready .e-contact .e-final-links{margin-top:24px}
+.journey-ending .e-scene-status,.journey-ending .e-contact .e-scene-caption{opacity:0}
+.journey-ending .motion-control{bottom:13px}
+@media(max-width:800px){
+ .moon-active .e-cases .e-case-story{left:26px;right:26px;top:36%;width:auto;max-width:none;padding:18px 20px}
+ .moon-active .e-guide-case{right:13%;top:29%;width:65px}
+ .journey-ready .footer{grid-template-columns:1fr auto;gap:14px;padding:38px 26px 65px;min-height:250px}
+ .journey-ready .footer .brand{grid-column:1;grid-row:1}
+ .journey-ready .footer .footer-links{grid-column:1/3;display:grid;grid-template-columns:repeat(3,1fr);gap:6px 14px;font-size:10px}
+ .journey-ready .footer .footer-links a{min-height:34px;display:flex;align-items:center}
+ .journey-ready .footer .prototype-note{grid-column:1/3;flex-direction:column;gap:5px;font-size:8px}
+ .journey-ready .footer .back-top{grid-column:2;grid-row:1}
+ .journey-ready .e-contact .e-stage{padding-top:108px}
+ .journey-ready .e-contact .e-final-copy{padding-top:0;width:100%}
+ .journey-ready .e-contact .e-final-copy h2{font-size:30px;line-height:1.5}
+ .journey-ready .e-contact .e-description{font-size:11px}
+ .journey-ready .e-contact .e-final-links{margin-top:20px;gap:25px}
+ .journey-ready .e-contact .e-final-links a{font-size:11px;gap:18px}
+ .moon-active .e-guide-final{top:45%;right:13%;left:auto;width:80px}
+}
+
+/* V29: a settled destination within the same world, with a clear closing composition. */
+.journey-ready .e-contact .e-final-copy{position:absolute;top:clamp(105px,16vh,165px);left:50%;width:calc(100% - 60px);max-width:760px;padding:0;text-align:center;translate:-50% 0;text-shadow:0 2px 30px #020c20}
+.journey-ready .e-contact .e-final-copy:before{content:"";position:absolute;z-index:-1;inset:-70px -100px -75px;background:radial-gradient(ellipse,#06162980,transparent 70%);pointer-events:none}
+.e-arrival-mark{display:flex;align-items:center;justify-content:center;gap:20px;margin:0 auto 24px;color:#e5c99b}
+.e-arrival-mark:before,.e-arrival-mark:after{content:"";width:65px;height:1px;background:linear-gradient(90deg,transparent,#e5c99b80)}
+.e-arrival-mark:after{rotate:180deg}
+.e-arrival-mark i{display:block;width:26px;height:26px;border:1px solid #e5c99bb3;border-radius:50%;box-shadow:0 0 20px #e5c99b35,inset 0 0 10px #e5c99b15;position:relative}
+.e-arrival-mark i:after{content:"";position:absolute;inset:9px;border-radius:50%;background:#f5dfb9;box-shadow:0 0 12px #f5dfb9}
+.journey-ready .e-contact .e-kicker{color:#dfcba8;font-size:9px;letter-spacing:.22em;margin-bottom:22px}
+.journey-ready .e-contact .e-final-copy h2{font-size:clamp(36px,4.3vw,62px);line-height:1.5;margin:0 0 22px;letter-spacing:.08em}
+.journey-ready .e-contact .e-description{margin:0 auto;line-height:2.1;color:#d3e4f4}
+.journey-ready .e-contact .e-final-links{display:flex;justify-content:center;gap:16px;margin-top:30px}
+.journey-ready .e-contact .e-final-links a{display:flex;align-items:center;justify-content:space-between;gap:35px;min-width:190px;padding:17px 22px;border:1px solid #c0d9ec70;border-radius:3px;background:#0b2447a3;font-size:12px;transition:background .2s,border-color .2s}
+.journey-ready .e-contact .e-final-links a:last-child{border-color:#dcc59d9c;background:#dbc7a11a}
+.journey-ready .e-contact .e-final-links a:hover,.journey-ready .e-contact .e-final-links a:focus-visible{padding:17px 22px;border-color:#e8f4ff;background:#416b8a80}
+.moon-active .e-guide-final{left:auto;right:16%;top:auto;bottom:25%;width:112px;transform:none!important}
+.journey-ready .footer:before{content:"";position:absolute;top:4px;left:var(--gutter);right:var(--gutter);height:1px;background:linear-gradient(90deg,transparent,#b7d4ed45,transparent)}
+@media(max-width:800px){
+ .journey-ready .e-contact .e-final-copy{top:112px;width:calc(100% - 44px)}
+ .e-arrival-mark{margin-bottom:20px;gap:14px}.e-arrival-mark:before,.e-arrival-mark:after{width:44px}
+ .journey-ready .e-contact .e-kicker{font-size:7px;letter-spacing:.13em;margin-bottom:18px}
+ .journey-ready .e-contact .e-final-copy h2{font-size:32px;margin-bottom:18px}
+ .journey-ready .e-contact .e-final-links{gap:12px;margin-top:24px}
+ .journey-ready .e-contact .e-final-links a{min-width:0;flex:1;max-width:180px;padding:14px 13px;font-size:11px;gap:12px}
+ .journey-ready .e-contact .e-final-links a:hover,.journey-ready .e-contact .e-final-links a:focus-visible{padding:14px 13px}
+ .moon-active .e-guide-final{bottom:31%;top:auto;right:16%;width:70px}
+}
+@media(max-height:700px){
+ .journey-ready .e-contact .e-final-copy{top:90px}
+ .e-arrival-mark{margin-bottom:12px}.e-arrival-mark i{width:18px;height:18px}.e-arrival-mark i:after{inset:6px}
+ .journey-ready .e-contact .e-kicker{margin-bottom:10px;font-size:7px}
+ .journey-ready .e-contact .e-final-copy h2{font-size:28px;line-height:1.4;margin-bottom:12px}
+ .journey-ready .e-contact .e-description{font-size:10px}
+ .journey-ready .e-contact .e-final-links{margin-top:18px}
+ .moon-active .e-guide-final{right:8%;bottom:29%;width:55px}
+ .journey-ready .footer{min-height:190px;padding-top:20px;padding-bottom:45px;gap:9px}
+}
+
+/* V30: slower cloud passage and a continuous return to the opening scene. */
+.journey-ready .e-journey-track{height:1630svh}
+.e-return-home{display:inline-flex;align-items:center;gap:16px;margin-top:24px;color:#c6d9e8;font-size:10px;letter-spacing:.12em;padding:10px 4px;border-bottom:1px solid #c6d9e830}
+.e-return-home span{font-size:16px}
+.journey-returning .e-scene-status{opacity:0}
+@media(max-width:800px){.e-return-home{font-size:9px;margin-top:16px;padding:8px 4px}}
+@media(max-height:700px){.e-return-home{margin-top:6px;font-size:8px;padding:5px 2px}}
+@media(prefers-reduced-motion:reduce){.journey-ready .e-journey-track{height:auto}.e-return-home span{font-size:0}.e-return-home span:after{content:'';font-size:14px}}
+/* The returned view is the end of the page, so omit the downward scroll cue. */
+.journey-returning .e-hero .e-scroll{visibility:hidden}
+
+/* V37: keep the same exposure on entering PRODUCTS; its old image-era scrim was darker. */
+.moon-active .e-journey-viewport[data-phase=products]:after{opacity:1;background:linear-gradient(90deg,#02091880,transparent 65%),linear-gradient(0deg,#02091855,transparent 28%)}
