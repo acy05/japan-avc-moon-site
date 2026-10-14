@@ -29,7 +29,7 @@ function ui(x){let next=0;for(let i=1;i<6;i++)if(x>=(exits[i-1]+starts[i])/2)nex
  sections.forEach((e,i)=>{let a=1;if(i>0)a*=smooth(exits[i-1]+(starts[i]-exits[i-1])*.6,starts[i],x);if(i<5)a*=1-smooth(exits[i],exits[i]+(starts[i+1]-exits[i])*.32,x);if(i===0&&x>11.7)a=smooth(11.7,13.05,x);if(i===5)a*=1-smooth(9.35,9.85,x);e.classList.toggle('guide-arrived',a>.72);e.inert=a<.75;e.style.visibility=a>.002?'visible':'hidden';e.style.setProperty('--scene-alpha',a.toFixed(4));e.style.setProperty('--scene-shift',`${(1-a)*12}px`);e.style.setProperty('--p',i===0&&x>11.7?.72:clamp((x-starts[i])/(exits[i]-starts[i]),0,1));e.style.setProperty('--text-reveal','0%');e.style.setProperty('--console-mask','0%');});
  if(next!==active){active=next;root.dataset.journeyScene=ids[next];document.querySelector('#scene-index').textContent=sections[next].dataset.number;document.querySelector('#scene-name').textContent=sections[next].dataset.name;document.querySelectorAll('.chapter-nav a').forEach((a,i)=>i===next?a.setAttribute('aria-current','location'):a.removeAttribute('aria-current'));document.dispatchEvent(new CustomEvent('avc:scene',{detail:{index:next}}));}
  view.dataset.phase=ids[next];root.style.setProperty('--e-progress',clamp(x/end,0,1));root.style.setProperty('--journey-ink','#d4e7f3');root.style.setProperty('--journey-flash',paused?'0':String(0));root.style.setProperty('--world-pass','0');document.querySelector('.site-header').classList.toggle('scrolled',x>.05);
- const footer=document.querySelector('.footer');const fa=smooth(8.6,9.05,x)*(1-smooth(9.35,9.85,x));footer.style.setProperty('--footer-alpha',fa);footer.inert=fa<.8;footer.style.visibility=fa>.002?'visible':'hidden';root.classList.toggle('journey-ending',x>8.6&&x<12.45);root.classList.toggle('journey-returning',x>9.35);view.dataset.finished=String(x>=13.05);
+ const footer=document.querySelector('.footer');const fa=smooth(12.45,13.05,x);footer.style.setProperty('--footer-alpha',fa);footer.inert=fa<.8;footer.style.visibility=fa>.002?'visible':'hidden';root.classList.toggle('journey-ending',x>8.6&&x<12.45);root.classList.toggle('journey-returning',x>9.35);view.dataset.finished=String(x>=13.05);
  if(x>4.5&&!scenePrepare){scenePrepare=true;document.dispatchEvent(new CustomEvent('avc:prepare-cases'));}
  canvas.dataset.position=x.toFixed(4);canvas.dataset.world=world;
 }
@@ -75,9 +75,12 @@ function render(now){auditFrame(now);raf=0;if(!mode||document.hidden)return;cons
 }
 function request(){if(!raf&&mode&&!document.hidden){if(performance.now()-last>100)last=performance.now();raf=requestAnimationFrame(render);}}
 // Use the actual scrollable distance, not svh multiplied by a changing iOS viewport.
-function resize(){const oldTravel=travel,progress=clamp((scrollY-top)/oldTravel,0,1);vh=innerHeight;top=track.getBoundingClientRect().top+scrollY;travel=Math.max(1,track.offsetHeight-vh);if(mode&&oldTravel>1&&travel!==oldTravel)scrollTo({top:top+progress*travel,behavior:'instant'});const d=Math.min(devicePixelRatio,mobile.matches?1.5:1.25,1440/innerWidth,1920/vh);if(gpu)gpu.resize(Math.round(innerWidth*d*rasterScale),Math.round(vh*d*rasterScale));layoutGuides();request();}
+function resize(){const oldTravel=travel,progress=scrollFor(clamp(target,0,end))/scrollFor(end);vh=innerHeight;top=track.getBoundingClientRect().top+scrollY;travel=Math.max(1,track.offsetHeight-vh);if(mode&&oldTravel>1&&travel!==oldTravel)scrollTo({top:top+progress*travel,behavior:'instant'});const d=Math.min(devicePixelRatio,mobile.matches?1.5:1.25,1440/innerWidth,1920/vh);if(gpu)gpu.resize(Math.round(innerWidth*d*rasterScale),Math.round(vh*d*rasterScale));layoutGuides();request();}
 function layoutGuides(){
- if(!mode||!mobile.matches)return;
+ if(!mode)return;
+ root.style.setProperty('--ending-footer-height',`${document.querySelector('.footer').offsetHeight}px`);
+ root.style.setProperty('--ending-route-height',`${document.querySelector('.e-route').offsetHeight}px`);
+ if(!mobile.matches)return;
  const copy=document.querySelector('.e-final-copy'),guide=document.querySelector('.e-guide-final');
  // Keep the farewell beside its guide, below all closing copy and links.
  guide.style.setProperty('--closing-guide-top',`${copy.offsetTop+copy.offsetHeight+16}px`);
