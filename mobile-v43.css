@@ -34,3 +34,18 @@
 @media (max-width:800px) and (min-height:681px){
  .moon-active .e-guide-case{top:auto;bottom:232px;right:13%;width:56px}
 }
+
+/* V46: a single full-height viewport, including Safari's changing toolbar. */
+html.journey-ready,html.journey-ready body{overscroll-behavior-y:none}
+.journey-ready .e-journey-viewport{height:100dvh}
+.journey-ready .e-scene[inert] :is(a,button,input){pointer-events:none}
+.journey-ready .e-route,.journey-ready .e-final-links{isolation:isolate}
+@media(max-width:800px){
+ .moon-active .e-guide-final{top:var(--closing-guide-top,470px);bottom:auto;right:14%;width:60px}
+ .moon-active .e-guide-final .guide-line{right:95%;bottom:12%;max-width:230px}
+}
+
+@media(max-width:800px){.moon-active .e-guide-product{top:max(41%,var(--product-guide-min,0px))}}
+@media(max-width:800px) and (max-height:680px){.moon-active .e-guide-hero{top:max(48%,var(--hero-guide-min,0px))}}
+
+@media(max-width:360px){.sequence-ready .e-route strong{font-size:18px;white-space:nowrap}}
