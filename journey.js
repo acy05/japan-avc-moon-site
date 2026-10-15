@@ -8,7 +8,7 @@ const clamp=(x,a,b)=>Math.max(a,Math.min(b,x)),smooth=(a,b,x)=>{const n=clamp((x
 // Add 30% scroll distance to the cloud voyage without adding input latency.
 const scrollFor=x=>x+2.1*smooth(1.6,8.6,x);
 const phaseFor=y=>{let lo=0,hi=end;for(let i=0;i<24;i++){const mid=(lo+hi)/2;if(scrollFor(mid)<y)lo=mid;else hi=mid;}return (lo+hi)/2;};
-let gpu,manifest,mode=false,t=0,target=0,top=0,vh=innerHeight,travel=1,active=-1,raf=0,last=0,lastScroll=0,world='machine',oldWorld='machine',navigation=0,modeToken=0,arrival=0,holdDone=0,idleClock=0,scenePrepare=false,worldElapsed=0,worldAnimating=false,clock=0,lastUI=-1,restKey='',settledAt=0,oldFrame=null,rasterScale=1,qualitySamples=[],lastHigh=null;
+let gpu,manifest,mode=false,t=0,target=0,top=0,vh=innerHeight,travel=1,active=-1,raf=0,last=0,lastScroll=0,world='machine',oldWorld='machine',navigation=0,modeToken=0,arrival=0,idleClock=0,scenePrepare=false,worldElapsed=0,worldAnimating=false,clock=0,lastUI=-1,restKey='',settledAt=0,oldFrame=null,rasterScale=1,qualitySamples=[],lastHigh=null;
 const entry=ids.indexOf(location.hash.slice(1));if(entry>0)t=anchors[entry];
 const backgroundFilms={pause(){},update(){}};
 let moon; // Create the GPU world only when motion is enabled.
@@ -54,22 +54,20 @@ function render(now){auditFrame(now);raf=0;if(!mode||document.hidden)return;cons
  if(!paused||moving||arrival)request();return;
  }
  if(root.classList.contains('moon-active'))root.classList.remove('moon-active');if(moon)moon.canvas.style.display='none';
- const charge=Number(document.querySelector('#connect-light').style.getPropertyValue('--charge'))||0,held=active===1&&(charge>0||holdDone>now);
  let frame=gpu.main(t),clip='main',key='atlas:main:'+t.toFixed(3);
  if(t>=7.1&&t<=8.1){clip='exit-'+world;frame=gpu.world(world,t-7.1,true);key='atlas:'+clip+':'+t.toFixed(3);}
  else if(t>=6.35&&t<7.1){clip='case-'+world;frame=gpu.world(world,clamp((t-6.35)/.75,0,1));key='atlas:'+clip+':'+t.toFixed(3);}
  const resting=!moving&&now-lastScroll>160&&!arrival&&!worldAnimating;
- if(resting&&!paused){const nextKey=held?'hold':(t>=6.35&&t<7.1?'idle-world-'+world:Math.abs(t-anchors[active])<.025?'idle-'+active:'main@'+Math.round(t/end*239));if(nextKey!==restKey){restKey=nextKey;settledAt=now;lastHigh=null;}
+ if(resting&&!paused){const nextKey=(t>=6.35&&t<7.1?'idle-world-'+world:Math.abs(t-anchors[active])<.025?'idle-'+active:'main@'+Math.round(t/end*239));if(nextKey!==restKey){restKey=nextKey;settledAt=now;lastHigh=null;}
   let high=null;
-  if(held){clip='hold';high=pair(clip,(holdDone>now?1:charge)*(manifest.clips.hold-1));}
-  else if(nextKey.startsWith('idle')){clip=nextKey;high=pair(clip,paused?0:(idleClock*.16%1)*manifest.clips[clip]);}
+  if(nextKey.startsWith('idle')){clip=nextKey;high=pair(clip,paused?0:(idleClock*.16%1)*manifest.clips[clip]);}
   else{const n=Math.round(t/end*239);high=pair('main',n);}
   if(high){lastHigh=high;}if(lastHigh){frame=lastHigh;key=lastHigh.key;}
  }else{restKey='';lastHigh=null;}
  if(!frame?.a||!frame?.b){const fallback=want('main',Math.round(t/end*239));if(fallback){frame={a:gpu.single(fallback.im,fallback.key),blend:0};key=fallback.key;}}
  if(paused&&render.frozen&&Math.abs(t-render.frozen.t)<.0005&&world===render.frozen.world){frame=render.frozen.frame;key=render.frozen.key;}
  if(paused&&frame?.a&&!render.frozen&&(t<6.35||t>8.1||gpu.packs.has(prefix()+'/world-'+world)))render.frozen={t,world,frame,key};else if(!paused||render.frozen&&(Math.abs(t-render.frozen.t)>=.0005||world!==render.frozen.world))render.frozen=null;
- const state=motionState(paused);state.key=key;gpu.render(frame,state);backgroundFilms.update({t,active,world,paused,moving,arrival,worldAnimating,held,clock});
+ const state=motionState(paused);state.key=key;gpu.render(frame,state);backgroundFilms.update({t,active,world,paused,moving,arrival,worldAnimating,clock});
  canvas.dataset.position=t.toFixed(4);canvas.dataset.world=world;canvas.dataset.actualWorld=t>=6.35&&t<=8.1&&gpu.packs.has(prefix()+'/world-'+world)?world:'main';canvas.dataset.clip=clip;canvas.dataset.paused=String(paused);canvas.dataset.buffering=String(!frame?.a);canvas.dataset.waitingForCamera='false';canvas.dataset.character='original-baked-2d-guide';canvas.dataset.transition=worldAnimating?'cloud-occlusion':'none';canvas.dataset.clock=clock.toFixed(3);canvas.dataset.motion='original-camera-and-guide; background-video-pending';
  if(!paused&&canvas.dataset.atlasReady==='true'){qualitySamples.push(elapsed);if(qualitySamples.length>90)qualitySamples.shift();const total=qualitySamples.reduce((n,x)=>n+x,0);if(total>2000&&qualitySamples.length>12&&total/qualitySamples.length>26&&rasterScale>.5){rasterScale=Math.max(.5,rasterScale*.82);qualitySamples=[];resize();canvas.dataset.rasterScale=rasterScale.toFixed(2);}}render.count=(render.count||0)+1;render.duration=(render.duration||0)+elapsed;if(render.duration>1000){canvas.dataset.fps=(render.count*1000/render.duration).toFixed(1);render.count=0;render.duration=0;}if(!paused||moving||arrival||worldAnimating)request();
 }
@@ -113,8 +111,7 @@ function go(id,instant=false){const i=ids.indexOf(id);if(i<0||!mode)return;const
 for(const name of ['wheel','touchstart'])window.addEventListener(name,()=>{navigation++;arrival=0;},{passive:true});window.addEventListener('pointerdown',e=>{if(!e.target.closest('#motion-toggle')){navigation++;arrival=0;}},{passive:true});document.querySelector('.e-product-console').addEventListener('focusin',()=>{navigation++;arrival=0;});
 window.addEventListener('keydown',e=>{if(['PageDown','PageUp','ArrowDown','ArrowUp','Home','End',' '].includes(e.key)){navigation++;arrival=0;}});
 window.addEventListener('scroll',()=>{lastScroll=performance.now();request();},{passive:true});window.addEventListener('resize',resize);window.addEventListener('hashchange',()=>go(location.hash.slice(1),true));
-new MutationObserver(()=>{if(root.classList.contains('motion-off')){navigation++;if(mode&&gpu?.last)render.frozen={t,world,frame:gpu.last,key:canvas.dataset.frame};}request();}).observe(root,{attributes:true,attributeFilter:['class']});new MutationObserver(request).observe(document.querySelector('#connect-light'),{attributes:true,attributeFilter:['style']});
-document.addEventListener('avc:connect',()=>{if(!mode)return;holdDone=performance.now()+1400;request();const inputVersion=navigation;setTimeout(()=>{if(mode&&navigation===inputVersion&&!root.classList.contains('motion-off'))go('products');},1450);});
+new MutationObserver(()=>{if(root.classList.contains('motion-off')){navigation++;if(mode&&gpu?.last)render.frozen={t,world,frame:gpu.last,key:canvas.dataset.frame};}request();}).observe(root,{attributes:true,attributeFilter:['class']});
 document.addEventListener('avc:world',e=>{if(!mode||!gpu||moon?.loaded){world=e.detail.name;canvas.dataset.world=world;request();return;}if(e.detail.name===world)return;oldWorld=world;oldFrame=gpu?.last;world=e.detail.name;gpu.retained=new Set(['world-'+world,'world-'+oldWorld]);worldElapsed=0;worldAnimating=!root.classList.contains('motion-off');render.frozen=null;restKey='';gpu?.pack('world-'+world).then(()=>request()).catch(()=>canvas.dataset.atlasError='true');request();});
 document.querySelectorAll('[data-world]').forEach(b=>{const hint=()=>{if(mode&&!moon?.loaded&&!worldAnimating)gpu.pack('world-'+b.dataset.world).catch(()=>{});};b.addEventListener('pointerenter',hint);b.addEventListener('focus',hint);});
 document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href').slice(1);if(mode&&ids.includes(id)){e.preventDefault();go(id);}}));

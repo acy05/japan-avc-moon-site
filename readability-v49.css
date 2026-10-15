@@ -1,0 +1,54 @@
+/* V49: remove the optional light control; keep the message as readable content. */
+.e-about .e-light-space .e-values{display:flex;position:relative;inset:auto;gap:12px;margin:24px 0}
+.e-about .e-light-space .e-values span{position:static;transform:none;opacity:1;color:#e7f2fc;font-size:14px;background:#07182bd9;border:1px solid #c7e0f633;padding:10px 14px}
+.e-about .e-light-result{position:relative;inset:auto;font-size:14px;color:#e7f2fc}
+@media(max-width:800px){
+ /* Content flows vertically so text growth never collides with illustrations. */
+ .journey-ready .e-journey-track .e-scene:not(.e-hero) .e-stage{display:flex;flex-direction:column;gap:14px;inset:76px 0 auto;height:calc(100% - 140px);padding:12px 24px 20px;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin}
+ .journey-ready .e-scene:not(.e-hero):not([inert]) .e-stage{pointer-events:auto}
+ .journey-ready .e-scene:not(.e-hero) .e-stage> :is(.e-copy,.e-final-copy,.e-light-space,.e-product-object,.e-product-console,.e-guide,.e-tech-workspace,.e-case-story,.e-case-selector,.e-case-note){position:relative;inset:auto;width:100%;max-width:none;min-height:0;flex:none;margin:0;translate:none!important;transform:none!important}
+ .journey-ready .e-scene:not(.e-hero) :is(.e-copy,.e-final-copy){order:1;padding:14px 16px;background:#07182bd9;border-radius:8px;color:#f0f6fc}
+ .journey-ready .e-scene:not(.e-hero) h2{font-size:26px;line-height:1.5;letter-spacing:.04em;margin:0 0 12px}
+ .journey-ready .e-scene:not(.e-hero) .e-kicker{font-size:10px;margin:0 0 12px;color:#c3d9ed}
+ .journey-ready .e-scene:not(.e-hero) .e-description{font-size:13px;line-height:1.85;margin:0 0 10px;color:#e4eff8}
+ .journey-ready .e-scene:not(.e-hero) .e-text-link{font-size:12px;min-height:44px;display:inline-flex;align-items:center;margin:0;padding:8px 0}
+ .journey-ready .e-scene:not(.e-hero) .e-scene-caption{display:none}
+ .moon-active .e-scene:not(.e-hero) .e-guide{position:relative;inset:auto;width:100%;max-width:none;margin:0;display:grid!important;grid-template-columns:minmax(0,1fr) 60px;align-items:center;gap:14px;animation:none!important;order:3}
+ .moon-active .e-scene:not(.e-hero) .e-guide img{grid-column:2;grid-row:1;width:60px}
+ .moon-active .e-scene:not(.e-hero) .e-guide .guide-line{position:relative;inset:auto;grid-column:1;grid-row:1;width:auto;max-width:none;font-size:12px;line-height:1.75;padding:10px 12px;background:#07182beF;box-sizing:border-box}
+ .journey-ready .e-about .e-light-space{order:2;height:auto;display:flex;flex-direction:column;gap:18px;padding:14px 16px;background:#07182bcc;border-radius:8px}
+ .journey-ready .e-about .e-light-space .e-values{order:1;display:flex;flex-wrap:wrap;gap:8px;margin:0}
+ .journey-ready .e-about .e-values span{font-size:12px;padding:8px;white-space:normal}
+ .journey-ready .e-about .e-light-result{order:2;margin:0;font-size:13px;line-height:1.8}
+ .journey-ready .e-products .e-product-object{order:2;display:flex;flex-direction:column;align-items:center;gap:5px}
+ .moon-active .e-products .e-product-object img{height:108px;width:108px;object-fit:contain;margin:0}
+ .journey-ready .e-product-object span{font-size:9px;line-height:1.5;text-align:center;background:#07182bd9;padding:4px 8px;border-radius:4px}
+ .journey-ready .e-products .e-product-console{order:4;display:grid;grid-template-columns:1fr;gap:12px;padding:14px 16px;background:#07182bef;border:1px solid #a3cbe530;border-radius:8px}
+ .journey-ready .e-product-console label{display:block;font-size:15px;line-height:1.6;margin-bottom:10px}
+ .journey-ready .e-product-links a{font-size:12px;min-height:44px;gap:8px}
+ .journey-ready .e-product-links small{font-size:9px;width:112px}
+ .journey-ready .e-technology .e-tech-workspace{order:2;padding:14px 16px;background:#07182bef;border-radius:8px}
+ .journey-ready .e-tech-workspace .e-blueprint{height:105px}
+ .journey-ready .e-topic-tabs{gap:12px}
+ .journey-ready .e-topic-tabs button{font-size:12px;min-height:44px;white-space:normal}
+ .journey-ready #tech-panel{min-height:0;padding-top:14px}
+ .journey-ready #tech-panel h3{font-size:15px;line-height:1.7;margin:10px 0}
+ .journey-ready #tech-panel p{font-size:13px;line-height:1.85}
+ .journey-ready #tech-panel a{font-size:12px;display:inline-flex;align-items:center;min-height:44px}
+ .journey-ready .e-cases .e-case-story{order:2;padding:14px 16px;background:#07182bef;border-radius:8px}
+ .journey-ready .e-case-story h3{font-size:22px;line-height:1.5;margin:10px 0}
+ .journey-ready .e-case-story p{font-size:13px;line-height:1.85;margin:10px 0}
+ .journey-ready .e-cases .e-case-selector{order:4;display:flex;flex-wrap:wrap;gap:0 10px;padding:8px 12px;background:#07182bef;border-radius:8px}
+ .journey-ready .e-case-selector button{flex:1 0 28%;font-size:12px;min-height:54px;white-space:normal;word-break:keep-all}
+ .journey-ready .e-case-selector button small{font-size:10px;margin-bottom:4px}
+ .journey-ready .e-case-note{order:5;font-size:10px;line-height:1.8;padding:10px 12px;background:#07182bef}
+ .journey-ready .e-contact .e-arrival-mark{margin-bottom:14px}
+ .journey-ready .e-contact .e-final-links{margin-top:18px}
+ .journey-ready .e-final-links a{font-size:13px;min-height:44px}
+ .journey-ready .e-return-home{font-size:11px;min-height:44px;line-height:1.7}
+ /* The guide and words share a row, never the same box. */
+ .moon-active .e-hero .e-guide-hero{left:26px;right:auto;width:calc(100% - 52px);top:max(48%,var(--hero-guide-min,0px));display:grid!important;grid-template-columns:minmax(0,1fr) 72px;gap:14px;align-items:center;animation:none}
+ .moon-active .e-hero .e-guide-hero img{grid-column:2;grid-row:1;width:72px}
+ .moon-active .e-hero .e-guide-hero .guide-line{position:relative;inset:auto;grid-column:1;grid-row:1;width:auto;max-width:none;font-size:11px;line-height:1.8;background:#07182bef}
+ .moon-active.journey-returning .e-hero .e-guide-hero{top:auto;bottom:calc(var(--ending-footer-height,214px) + var(--ending-route-height,120px) + 36px)}
+}
