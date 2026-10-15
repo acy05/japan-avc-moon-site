@@ -163,7 +163,7 @@ vec3 shade(vec3 n,vec2 uv){vec2 local=(uv-vec2(.36,.18))/vec2(.22,.29);float ins
   this.fullReady=hd.then(()=>{this.detailReady=true;this.canvas.dataset.detailReadyMs=performance.now().toFixed(1);this.canvas.dataset.detailReady='true';document.dispatchEvent(new Event('avc:detail-ready'))});
   // Handle background errors immediately; never strand the page at a loading gate.
   this.fullReady.catch(error=>{this.detailError=error;this.canvas.dataset.detailReady='error';if(this.loaded)document.dispatchEvent(new Event('avc:gpu-lost'));});
-  await Promise.all([texture,detail,clouds,volume,geometry]);
+  await Promise.all([texture,detail,clouds,volume,geometry].map((job,index)=>job.then(value=>{window.AVCBoot?.asset(index);return value;})));
   if(this.detailError)throw this.detailError;
  }
  render(t,clock){const g=this.gl,c=this.canvas;// Spread actual distance gain across the return instead of accelerating at its end.
