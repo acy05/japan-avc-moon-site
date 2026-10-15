@@ -15,7 +15,7 @@
  .journey-ready .e-scene:not(.e-hero) .e-scene-caption{display:none}
  .moon-active .e-scene:not(.e-hero) .e-guide{position:relative;inset:auto;width:100%;max-width:none;margin:0;display:grid!important;grid-template-columns:minmax(0,1fr) 60px;align-items:center;gap:14px;animation:none!important;order:3}
  .moon-active .e-scene:not(.e-hero) .e-guide img{grid-column:2;grid-row:1;width:60px}
- .moon-active .e-scene:not(.e-hero) .e-guide .guide-line{position:relative;inset:auto;grid-column:1;grid-row:1;width:auto;max-width:none;font-size:12px;line-height:1.75;padding:10px 12px;background:#07182beF;box-sizing:border-box}
+ .moon-active .e-scene:not(.e-hero) .e-guide .guide-line{position:relative;inset:auto;grid-column:1;grid-row:1;width:fit-content;max-width:min(100%,18em);justify-self:end;text-wrap:pretty;font-size:12px;line-height:1.65;padding:8px 10px;background:#07182beF;box-sizing:border-box}
  .journey-ready .e-about .e-light-space{order:2;height:auto;display:flex;flex-direction:column;gap:18px;padding:14px 16px;background:#07182bcc;border-radius:8px}
  .journey-ready .e-about .e-light-space .e-values{order:1;display:flex;flex-wrap:wrap;gap:8px;margin:0}
  .journey-ready .e-about .e-values span{font-size:12px;padding:8px;white-space:normal}
@@ -49,6 +49,6 @@
  /* The guide and words share a row, never the same box. */
  .moon-active .e-hero .e-guide-hero{left:26px;right:auto;width:calc(100% - 52px);top:max(48%,var(--hero-guide-min,0px));display:grid!important;grid-template-columns:minmax(0,1fr) 72px;gap:14px;align-items:center;animation:none}
  .moon-active .e-hero .e-guide-hero img{grid-column:2;grid-row:1;width:72px}
- .moon-active .e-hero .e-guide-hero .guide-line{position:relative;inset:auto;grid-column:1;grid-row:1;width:auto;max-width:none;font-size:11px;line-height:1.8;background:#07182bef}
+ .moon-active .e-hero .e-guide-hero .guide-line{position:relative;inset:auto;grid-column:1;grid-row:1;width:fit-content;max-width:min(100%,18em);justify-self:end;text-wrap:pretty;font-size:11px;line-height:1.65;padding:8px 10px;box-sizing:border-box;background:#07182bef}
  .moon-active.journey-returning .e-hero .e-guide-hero{top:auto;bottom:calc(var(--ending-footer-height,214px) + var(--ending-route-height,120px) + 36px)}
 }
